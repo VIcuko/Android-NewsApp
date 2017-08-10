@@ -59,15 +59,14 @@ public class NewsAdapter extends ArrayAdapter<News> {
     }
 
     private String parseAuthors(ArrayList<String> authors) {
-        String authorsTogether="";
+        String authorsTogether = "";
         if (authors != null) {
             for (int i = 0; i < authors.size(); i++) {
                 authorsTogether = authorsTogether.concat(authors.get(i).toString());
                 String separator;
-                if (i==authors.size()-2){
+                if (i == authors.size() - 2) {
                     separator = " and ";
-                }
-                else {
+                } else {
                     separator = (i == (authors.size() - 1)) ? ("") : (", ");
                 }
                 authorsTogether = authorsTogether.concat(separator);

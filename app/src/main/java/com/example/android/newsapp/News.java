@@ -14,7 +14,7 @@ public class News {
     private String mUrl;
 
     public News(String title, ArrayList<String> authors, String sectionName,
-                String publishedDate, String url){
+                String publishedDate, String url) {
 
         mWebTitle = title;
         mAuthors = authors;
@@ -23,23 +23,23 @@ public class News {
         mUrl = url;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return mWebTitle;
     }
 
-    public ArrayList<String> getAuthors(){
+    public ArrayList<String> getAuthors() {
         return mAuthors;
     }
 
-    public String getSectionName(){
+    public String getSectionName() {
         return mSectionName;
     }
 
-    public String getPublishedDate(){
+    public String getPublishedDate() {
         return mwebPublicationDate;
     }
 
-    public String getUrl(){
+    public String getUrl() {
         return mUrl;
     }
 }

@@ -56,8 +56,8 @@
 
 
     <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/separator"
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp">

@@ -1,7 +1,5 @@
 package com.example.android.newsapp;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -100,69 +98,43 @@ public class QueryUtils {
             return null;
         }
 
+        String webTitle;
+        String sectionName;
+        String webPublicationDate;
+        ArrayList<String> authors = new ArrayList<String>();
+
         ArrayList<News> news = new ArrayList<>();
 
         try {
             JSONObject jsonObj = new JSONObject(newsJSON);
 
-            JSONArray features = jsonObj.getJSONArray("items");
+            JSONObject response = jsonObj.getJSONObject("response");
 
-            for (int i = 0; i < features.length(); i++) {
-                JSONObject newsInfo = features.getJSONObject(i);
-                JSONObject properties = newsInfo.getJSONObject("volumeInfo");
+            JSONArray results = response.has("results") ? response.getJSONArray("results") : null;
 
-                String title = properties.has("title") ? properties.getString("title") : "";
+            if (results != null) {
+                for (int i = 0; i < results.length(); i++) {
 
-                ArrayList<String> authors = new ArrayList<String>();
-                JSONArray jArray = properties.has("authors") ? properties.getJSONArray("authors") : null;
-                if (jArray != null) {
-                    for (int j = 0; j < jArray.length(); j++) {
-                        authors.add(jArray.getString(j));
-                    }
-                }
+                    JSONObject article = results.getJSONObject(i);
+                    webTitle = article.has("webTitle")? article.getString("webTitle") : "";
+                    sectionName = article.has("sectionName")? article.getString("sectionName") : "";
+                    webPublicationDate = article.has("webPublicationDate")? article.getString("webPublicationDate").substring(0,10) : "";
 
-                String publishedDate = properties.has("publishedDate") ? properties.getString("publishedDate").substring(0, 4) : "";
+                    JSONArray tags = article.has("tags")? article.getJSONArray("tags") : null;
 
-                String section = properties.has("description") ? properties.getString("description") : "";
-
-                JSONObject imageLinks = properties.has("imageLinks") ? properties.getJSONObject("imageLinks") : null;
-
-                String urlString = "";
-                Bitmap bitmap = null;
-
-                if (imageLinks != null) {
-                    urlString = imageLinks.has("smallThumbnail") ? imageLinks.getString("smallThumbnail") : "";
-                    try {
-                        URL url = new URL(urlString);
-                        bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                JSONArray industryIdentifiers = properties.has("industryIdentifiers") ? properties.getJSONArray("industryIdentifiers") : null;
-
-                String isbn = "";
-                if (industryIdentifiers != null) {
-
-                    for (int k = 0; k < industryIdentifiers.length(); k++) {
-                        JSONObject isbnObject = industryIdentifiers.getJSONObject(k);
-                        String isbnType = isbnObject.getString("type");
-                        if (industryIdentifiers.length() == 1) {
-                            isbn = isbnObject.getString("identifier");
-                        } else {
-                            if (Integer.parseInt(isbnType.substring(5)) == 13) {
-                                isbn = isbnObject.has("identifier") ? isbnObject.getString("identifier") : "";
+                    if (tags != null){
+                        for (int j = 0; j < tags.length(); j++) {
+                            JSONObject tag = tags.getJSONObject(j);
+                            String author = tag.has("webTitle")? tag.getString("webTitle") : null;
+                            if (author != null){
+                                authors.add(author);
                             }
                         }
                     }
-                }
 
-                News oneNews = new News(title, authors, section, publishedDate);
-                news.add(oneNews);
+                    News oneNews = new News(webTitle, authors, sectionName, webPublicationDate);
+                    news.add(oneNews);
+                }
             }
 
         } catch (JSONException e) {
@@ -172,7 +144,7 @@ public class QueryUtils {
         return news;
     }
 
-    public static List<News> fetchBooksData(String requestUrl) {
+    public static List<News> fetchNewsData(String requestUrl) {
         URL url = createUrl(requestUrl);
         String jsonResponse = null;
         try {

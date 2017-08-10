@@ -10,7 +10,7 @@ public class News {
     private String mWebTitle;
     private ArrayList<String> mAuthors;
     private String mSectionName;
-    private String mPublishedDate;
+    private String mwebPublicationDate;
 
     public News(String title, ArrayList<String> authors, String sectionName,
                 String publishedDate){
@@ -18,7 +18,7 @@ public class News {
         mWebTitle = title;
         mAuthors = authors;
         mSectionName = sectionName;
-        mPublishedDate = publishedDate;
+        mwebPublicationDate = publishedDate;
     }
 
     public String getTitle(){
@@ -34,6 +34,6 @@ public class News {
     }
 
     public String getPublishedDate(){
-        return mPublishedDate;
+        return mwebPublicationDate;
     }
 }

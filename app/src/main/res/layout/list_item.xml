@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:textSize="18sp"
+        tools:text="Amazing Stories"
+        android:textStyle="italic"
+        android:paddingTop="@dimen/vertical_padding"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <RelativeLayout
+        android:id="@+id/item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:drawSelectorOnTop="true"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/vertical_padding"
+        android:paddingLeft="@dimen/horizontal_padding"
+        android:paddingRight="@dimen/horizontal_padding"
+        android:paddingTop="@dimen/vertical_padding">
+
+        <ImageView
+            android:id="@+id/open_browser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/small_horizontal_padding"
+            android:src="@drawable/ic_open_in_browser_black_24dp" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@id/open_browser"
+            android:paddingBottom="@dimen/news_title_bottom_padding"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@color/primary_text_color"
+            tools:text="The incredible story behind the scenes" />
+
+        <TextView
+            android:id="@+id/published_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_toLeftOf="@id/open_browser"
+            android:paddingLeft="@dimen/small_horizontal_padding"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="@color/secondary_text_color"
+            tools:text="2017-04-28" />
+
+        <TextView
+            android:id="@+id/authors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/title"
+            android:layout_toLeftOf="@id/published_date"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="@color/secondary_text_color"
+            tools:text="James McDonalds" />
+    </RelativeLayout>
+</LinearLayout>

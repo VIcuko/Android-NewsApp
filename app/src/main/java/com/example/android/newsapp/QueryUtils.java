@@ -18,6 +18,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.android.newsapp.MainActivity.LOG_TAG;
 
@@ -67,7 +68,7 @@ public class QueryUtils {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem retrieving the book JSON results.", e);
+            Log.e(LOG_TAG, "Problem retrieving the news JSON results.", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -93,22 +94,22 @@ public class QueryUtils {
         return output.toString();
     }
 
-    public static ArrayList<Book> extractBooks(String bookJSON) {
+    public static ArrayList<News> extractNews(String newsJSON) {
 
-        if (TextUtils.isEmpty(bookJSON)) {
+        if (TextUtils.isEmpty(newsJSON)) {
             return null;
         }
 
-        ArrayList<Book> books = new ArrayList<>();
+        ArrayList<News> news = new ArrayList<>();
 
         try {
-            JSONObject jsonObj = new JSONObject(bookJSON);
+            JSONObject jsonObj = new JSONObject(newsJSON);
 
             JSONArray features = jsonObj.getJSONArray("items");
 
             for (int i = 0; i < features.length(); i++) {
-                JSONObject bookInfo = features.getJSONObject(i);
-                JSONObject properties = bookInfo.getJSONObject("volumeInfo");
+                JSONObject newsInfo = features.getJSONObject(i);
+                JSONObject properties = newsInfo.getJSONObject("volumeInfo");
 
                 String title = properties.has("title") ? properties.getString("title") : "";
 
@@ -122,7 +123,7 @@ public class QueryUtils {
 
                 String publishedDate = properties.has("publishedDate") ? properties.getString("publishedDate").substring(0, 4) : "";
 
-                String description = properties.has("description") ? properties.getString("description") : "";
+                String section = properties.has("description") ? properties.getString("description") : "";
 
                 JSONObject imageLinks = properties.has("imageLinks") ? properties.getJSONObject("imageLinks") : null;
 
@@ -160,18 +161,18 @@ public class QueryUtils {
                     }
                 }
 
-                Book book = new Book(title, authors, description, publishedDate, isbn, urlString, bitmap);
-                books.add(book);
+                News oneNews = new News(title, authors, section, publishedDate);
+                news.add(oneNews);
             }
 
         } catch (JSONException e) {
-            Log.e("QueryUtils", "Problem parsing the book JSON results", e);
+            Log.e("QueryUtils", "Problem parsing the news JSON results", e);
         }
 
-        return books;
+        return news;
     }
 
-    public static List<Book> fetchBooksData(String requestUrl) {
+    public static List<News> fetchBooksData(String requestUrl) {
         URL url = createUrl(requestUrl);
         String jsonResponse = null;
         try {
@@ -180,7 +181,7 @@ public class QueryUtils {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
 
-        return extractBooks(jsonResponse);
+        return extractNews(jsonResponse);
     }
 
 }

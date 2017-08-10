@@ -12,12 +12,12 @@ public class News {
     private String mSectionName;
     private String mPublishedDate;
 
-    public News(String title, ArrayList<String> authors, String description,
+    public News(String title, ArrayList<String> authors, String sectionName,
                 String publishedDate){
 
         mWebTitle = title;
         mAuthors = authors;
-        mSectionName = description;
+        mSectionName = sectionName;
         mPublishedDate = publishedDate;
     }
 

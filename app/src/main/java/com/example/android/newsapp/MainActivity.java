@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
         uriBuilder.appendQueryParameter("q", mQueryText);
+        uriBuilder.appendQueryParameter("show-tags", "contributor");
 
         return new NewsLoader(this, uriBuilder.toString());
     }

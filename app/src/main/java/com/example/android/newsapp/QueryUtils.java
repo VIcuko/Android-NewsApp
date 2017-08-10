@@ -102,6 +102,7 @@ public class QueryUtils {
         String sectionName;
         String webPublicationDate;
         ArrayList<String> authors = new ArrayList<String>();
+        String webUrl;
 
         ArrayList<News> news = new ArrayList<>();
 
@@ -116,23 +117,24 @@ public class QueryUtils {
                 for (int i = 0; i < results.length(); i++) {
 
                     JSONObject article = results.getJSONObject(i);
-                    webTitle = article.has("webTitle")? article.getString("webTitle") : "";
-                    sectionName = article.has("sectionName")? article.getString("sectionName") : "";
-                    webPublicationDate = article.has("webPublicationDate")? article.getString("webPublicationDate").substring(0,10) : "";
+                    webTitle = article.has("webTitle") ? article.getString("webTitle") : "";
+                    sectionName = article.has("sectionName") ? article.getString("sectionName") : "";
+                    webPublicationDate = article.has("webPublicationDate") ? article.getString("webPublicationDate").substring(0, 10) : "";
+                    webUrl = article.has("webUrl") ? article.getString("webUrl") : "";
 
-                    JSONArray tags = article.has("tags")? article.getJSONArray("tags") : null;
+                    JSONArray tags = article.has("tags") ? article.getJSONArray("tags") : null;
 
-                    if (tags != null){
+                    if (tags != null) {
                         for (int j = 0; j < tags.length(); j++) {
                             JSONObject tag = tags.getJSONObject(j);
-                            String author = tag.has("webTitle")? tag.getString("webTitle") : null;
-                            if (author != null){
+                            String author = tag.has("webTitle") ? tag.getString("webTitle") : null;
+                            if (author != null) {
                                 authors.add(author);
                             }
                         }
                     }
 
-                    News oneNews = new News(webTitle, authors, sectionName, webPublicationDate);
+                    News oneNews = new News(webTitle, authors, sectionName, webPublicationDate, webUrl);
                     news.add(oneNews);
                 }
             }

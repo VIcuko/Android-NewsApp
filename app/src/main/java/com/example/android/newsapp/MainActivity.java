@@ -102,13 +102,19 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<News>> loader, List<News> news) {
-        mAdapter.clear();
+        mProgressBar.setVisibility(View.GONE);
 
+        mEmptyView.setText(R.string.empty_view_text);
+        mEmptyView.setVisibility(View.VISIBLE);
+
+        if (!isOnline()) {
+            mEmptyView.setText(R.string.no_connection);
+        }
+
+        mAdapter.clear();
         if (news != null && !news.isEmpty()) {
             mAdapter.addAll(news);
         }
-        mProgressBar.setVisibility(View.GONE);
-        mEmptyView.setText(R.string.empty_view_text);
     }
 
     @Override

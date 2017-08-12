@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         });
     }
 
-
     public boolean isOnline() {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -90,14 +89,19 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
 
-        Uri baseUri = Uri.parse(THE_GUARDIAN_REQUEST_URL);
-        Uri.Builder uriBuilder = baseUri.buildUpon();
+        if (isOnline()) {
+            Uri baseUri = Uri.parse(THE_GUARDIAN_REQUEST_URL);
+            Uri.Builder uriBuilder = baseUri.buildUpon();
 
-        uriBuilder.appendQueryParameter("q", mQueryText);
-        uriBuilder.appendQueryParameter("show-tags", "contributor");
-        uriBuilder.appendQueryParameter("api-key", "test");
+            uriBuilder.appendQueryParameter("q", mQueryText);
+            uriBuilder.appendQueryParameter("show-tags", "contributor");
+            uriBuilder.appendQueryParameter("api-key", "test");
 
-        return new NewsLoader(this, uriBuilder.toString());
+            return new NewsLoader(this, uriBuilder.toString());
+        } else {
+            mEmptyView.setText(R.string.no_connection);
+            return null;
+        }
     }
 
     @Override

@@ -98,12 +98,6 @@ public class QueryUtils {
             return null;
         }
 
-        String webTitle;
-        String sectionName;
-        String webPublicationDate;
-        ArrayList<String> authors = new ArrayList<String>();
-        String webUrl;
-
         ArrayList<News> news = new ArrayList<>();
 
         try {
@@ -115,12 +109,13 @@ public class QueryUtils {
 
             if (results != null) {
                 for (int i = 0; i < results.length(); i++) {
+                    ArrayList<String> authors = new ArrayList<String>();
 
                     JSONObject article = results.getJSONObject(i);
-                    webTitle = article.has("webTitle") ? article.getString("webTitle") : "";
-                    sectionName = article.has("sectionName") ? article.getString("sectionName") : "";
-                    webPublicationDate = article.has("webPublicationDate") ? article.getString("webPublicationDate").substring(0, 10) : "";
-                    webUrl = article.has("webUrl") ? article.getString("webUrl") : "";
+                    String webTitle = article.has("webTitle") ? article.getString("webTitle") : "";
+                    String sectionName = article.has("sectionName") ? article.getString("sectionName") : "";
+                    String webPublicationDate = article.has("webPublicationDate") ? article.getString("webPublicationDate").substring(0, 10) : "";
+                    String webUrl = article.has("webUrl") ? article.getString("webUrl") : "";
 
                     JSONArray tags = article.has("tags") ? article.getJSONArray("tags") : null;
 
